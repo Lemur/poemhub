@@ -36,7 +36,6 @@ function render(template) {
         break
       case 'B':
         const bWords = wordsData[type]
-        console.log(bWords);
         const randomB = random(bWords, 1)[0][length]
         const bData = random(randomB[pz], count)
         pv[cv] = bData
