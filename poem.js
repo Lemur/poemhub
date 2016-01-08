@@ -1,12 +1,31 @@
 const templatesData = require('./data/templates')
 const wordsData = require('./data/words')
 
-function random(array, limit) {
+/**
+ * 从数组中随机取几个元素
+ * @param  {Array}   array          原始的数据源
+ * @param  {Int}     limit          需要几个随机的元素
+ * @param  {String}  cTempData      当前已有的汉字组成的字符串，新生成的数组不会有重复的汉字
+ * @return {Array}   生成的新随机数组
+ */
+function randomTempData(array, limit, cTempData) {
+  // 如果需要去重
+  if (cTempData) {
+    console.log('// -----------------------------------------------------------');
+    console.log(cTempData);
+  }
   const tArray = array
   tArray.sort(() => {
     return 0.5 - Math.random()
   });
   return tArray.slice(0, limit)
+}
+
+/**
+ * 随机从数组中取出一个元素
+ */
+function random(array) {
+  return array[Math.floor(Math.random() * (array.length))]
 }
 
 function render(template) {
@@ -30,14 +49,17 @@ function render(template) {
     const count = templateCount[cv]
     switch (type) {
       case 'A':
-        const aWords = wordsData[type][length]
-        const aData = random(aWords[pz], count)
-        pv[cv] = aData
+        const aWords = wordsData[type][length][pz]
+        const addRandomWords = () => {
+          const aData = randomTempData(aWords, count, pv)
+          pv[cv] = aData
+        }
+        addRandomWords()
         break
       case 'B':
         const bWords = wordsData[type]
-        const randomB = random(bWords, 1)[0][length]
-        const bData = random(randomB[pz], count)
+        const randomB = random(bWords)[length][pz]
+        const bData = randomTempData(randomB, count, pv)
         pv[cv] = bData
         break
       default:
@@ -61,7 +83,7 @@ function render(template) {
 }
 
 function poem(options) {
-  const temp = options.template || random(templatesData, 1)[0]
+  const temp = options.template || random(templatesData)
   console.log(temp)
 
   // 有生日，进入生日模式
