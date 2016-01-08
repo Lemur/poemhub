@@ -9,16 +9,25 @@ const wordsData = require('./data/words')
  * @return {Array}   生成的新随机数组
  */
 function randomTempData(array, limit, cTempData) {
-  // 如果需要去重
-  if (cTempData) {
-    console.log('// -----------------------------------------------------------');
-    console.log(cTempData);
+  const resultArray = []
+  while (resultArray.length !== limit) {
+    var r = random(array)
+    var sameWords = Object.keys(cTempData)
+      .reduce((pv, cv) => {
+        const tempWordsArray = cTempData[cv].join('').split('')
+        const resultWordsArray = resultArray.join('').split('')
+        const r = pv.concat(tempWordsArray).concat(resultWordsArray)
+        return r
+      }, [])
+      .filter((word) => {
+        return word === r
+      })
+    if (sameWords.length === 0) {
+      resultArray.push(r)
+    }
   }
-  const tArray = array
-  tArray.sort(() => {
-    return 0.5 - Math.random()
-  });
-  return tArray.slice(0, limit)
+
+  return resultArray
 }
 
 /**
