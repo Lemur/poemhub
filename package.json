@@ -1,0 +1,22 @@
+{
+  "name": "poemhub",
+  "version": "0.1.0",
+  "description": "Build your poem by your birthday",
+  "main": "poem.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/callmewhy/oh-my-poem.git"
+  },
+  "keywords": [
+    "poem"
+  ],
+  "author": "callmewhy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/callmewhy/oh-my-poem/issues"
+  },
+  "homepage": "https://github.com/callmewhy/oh-my-poem#readme"
+}
