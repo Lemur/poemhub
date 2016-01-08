@@ -28,14 +28,16 @@ function render(template) {
     const length = cv.split('')[1]
     const pz = cv.split('')[2]
     const count = templateCount[cv]
-    const words = wordsData[type][length]
     switch (type) {
       case 'A':
-        const aData = random(words[pz], count)
+        const aWords = wordsData[type][length]
+        const aData = random(aWords[pz], count)
         pv[cv] = aData
         break
       case 'B':
-        const randomB = random(words, 1)[0]
+        const bWords = wordsData[type]
+        console.log(bWords);
+        const randomB = random(bWords, 1)[0][length]
         const bData = random(randomB[pz], count)
         pv[cv] = bData
         break
