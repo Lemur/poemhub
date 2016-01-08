@@ -1,4 +1,5 @@
-const data = require('./data')
+const templatesData = require('./data/templates')
+const wordsData = require('./data/words')
 
 function random(array, limit) {
   const tArray = array
@@ -27,14 +28,16 @@ function render(template) {
     const length = cv.split('')[1]
     const pz = cv.split('')[2]
     const count = templateCount[cv]
-    const words = data.words[type][length]
+    const words = wordsData[type][length]
     switch (type) {
       case 'A':
-        pv[cv] = random(words[pz], count)
+        const aData = random(words[pz], count)
+        pv[cv] = aData
         break
       case 'B':
         const randomB = random(words, 1)[0]
-        pv[cv] = random(randomB[pz], count)
+        const bData = random(randomB[pz], count)
+        pv[cv] = bData
         break
       default:
         break
@@ -57,13 +60,23 @@ function render(template) {
 }
 
 function poem(options) {
-  const result = render(data.templates[0])
+  const temp = options.template || random(templatesData, 1)[0]
+  console.log(temp)
+
+  // 有生日，进入生日模式
+  if (options.birthday) {
+
+  }
+  const result = render(temp)
   return result
 }
 module.exports = poem
 
-const r = poem({
-  birthday: 19921030,
-})
 
-console.log(r)
+// 测试
+templatesData.forEach((t) => {
+  const r = poem({
+    templateType: 1,
+  })
+  console.log(r)
+})
