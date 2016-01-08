@@ -14,13 +14,17 @@ function randomTempData(array, limit, cTempData) {
     var r = random(array)
     var sameWords = Object.keys(cTempData)
       .reduce((pv, cv) => {
-        const tempWordsArray = cTempData[cv].join('').split('')
-        const resultWordsArray = resultArray.join('').split('')
-        const r = pv.concat(tempWordsArray).concat(resultWordsArray)
-        return r
+        return pv.concat(cTempData[cv].join('').split(''))
       }, [])
-      .filter((word) => {
-        return word === r
+      .concat(resultArray.join('').split(''))
+      .filter((cWord) => {
+        var same = false
+        r.split('').forEach((w) => {
+          if (w == cWord) {
+            same = true
+          }
+        })
+        return same
       })
     if (sameWords.length === 0) {
       resultArray.push(r)
@@ -51,6 +55,9 @@ function render(template) {
       return pv
     }, {})
 
+  const aDataWords = wordsData.A
+  const bDataWords = random(wordsData.B)
+
   const templateData = Object.keys(templateCount).reduce((pv, cv) => {
     const type = cv.split('')[0]
     const length = cv.split('')[1]
@@ -58,7 +65,7 @@ function render(template) {
     const count = templateCount[cv]
     switch (type) {
       case 'A':
-        const aWords = wordsData[type][length][pz]
+        const aWords = aDataWords[length][pz]
         const addRandomWords = () => {
           const aData = randomTempData(aWords, count, pv)
           pv[cv] = aData
@@ -66,8 +73,7 @@ function render(template) {
         addRandomWords()
         break
       case 'B':
-        const bWords = wordsData[type]
-        const randomB = random(bWords)[length][pz]
+        const randomB = bDataWords[length][pz]
         const bData = randomTempData(randomB, count, pv)
         pv[cv] = bData
         break
@@ -93,7 +99,6 @@ function render(template) {
 
 function poem(options) {
   const temp = options.template || random(templatesData)
-  console.log(temp)
 
   // 有生日，进入生日模式
   if (options.birthday) {
@@ -107,8 +112,9 @@ module.exports = poem
 
 // 测试
 templatesData.forEach((t) => {
+  console.log(t)
   const r = poem({
-    templateType: 1,
+    template: t,
   })
   console.log(r)
 })
