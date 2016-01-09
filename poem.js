@@ -17,4 +17,4 @@ function poem(options) {
 module.exports = poem
 
 
-console.log(poem()[0])
+// console.log(poem()[0])

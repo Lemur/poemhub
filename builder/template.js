@@ -1,4 +1,4 @@
-require('../lib/random')
+const random = require('../lib/random')
 const wordsData = require('../data/words')
 const render = require('../lib/render')
 
@@ -13,7 +13,7 @@ const render = require('../lib/render')
 function randomTempData(array, limit, cTempData) {
   const resultArray = []
   while (resultArray.length !== limit) {
-    var r = array.randomItem()
+    var r = random.getRandomItem(array)
     var sameWords = Object.keys(cTempData)
       .reduce((pv, cv) => {
         return pv.concat(cTempData[cv].join('').split(''))
@@ -52,7 +52,7 @@ function build(template) {
     }, {})
 
   const aDataWords = wordsData.A
-  const bDataWords = wordsData.B.randomItem()
+  const bDataWords = random.getRandomItem(wordsData.B)
 
   const templateData = Object.keys(templateCount).reduce((pv, cv) => {
     const type = cv.split('')[0]
