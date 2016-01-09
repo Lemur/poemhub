@@ -1,5 +1,6 @@
 require('../lib/random')
 const wordsData = require('../data/words')
+const render = require('../lib/render')
 
 
 /**
@@ -36,7 +37,7 @@ function randomTempData(array, limit, cTempData) {
 }
 
 
-function render(template) {
+function build(template) {
   const placeholders = template.reduce((pv, cv) => {
     const words = cv.split('/')
     words.pop()
@@ -75,27 +76,11 @@ function render(template) {
     return pv
   }, {})
 
-  const result = template
-    .reduce((pv, cv) => {
-      const words = cv.split('/')
-      const punctuation = words.pop()
-      const r = words.map((placeholder) => {
-        const w = templateData[placeholder].pop()
-        return w
-      })
-      return pv + r.join('') + punctuation + '\n'
-    }, '')
-
-  return result
+  return render(template, templateData)
 }
 
-module.exports.render = render
+module.exports.build = build
 
 
-// templatesData.forEach((t) => {
-//   console.log(t)
-//   const r = poem({
-//     template: t,
-//   })
-//   console.log(r)
-// })
+// const r = build(['A2+/A2-/A1+/，', 'A2-/A2+/B1-/。', 'A2-/A2+/A1+/，', 'A2+/A2-/B1-/。', ])
+// console.log(r)
