@@ -66,11 +66,8 @@ function render(template) {
     switch (type) {
       case 'A':
         const aWords = aDataWords[length][pz]
-        const addRandomWords = () => {
-          const aData = randomTempData(aWords, count, pv)
-          pv[cv] = aData
-        }
-        addRandomWords()
+        const aData = randomTempData(aWords, count, pv)
+        pv[cv] = aData
         break
       case 'B':
         const randomB = bDataWords[length][pz]
@@ -110,11 +107,21 @@ function poem(options) {
 module.exports = poem
 
 
-// 测试
-templatesData.forEach((t) => {
-  console.log(t)
-  const r = poem({
-    template: t,
-  })
-  console.log(r)
+// ----------------------------------------------------------------------------
+// 测试： template
+// ----------------------------------------------------------------------------
+// templatesData.forEach((t) => {
+//   console.log(t)
+//   const r = poem({
+//     template: t,
+//   })
+//   console.log(r)
+// })
+
+// ----------------------------------------------------------------------------
+// 测试： birthday
+// ----------------------------------------------------------------------------
+const r = poem({
+  birthday: 19921030,
 })
+console.log(r)
