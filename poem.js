@@ -1,127 +1,20 @@
-const templatesData = require('./data/templates')
-const wordsData = require('./data/words')
-
-/**
- * 从数组中随机取几个元素
- * @param  {Array}   array          原始的数据源
- * @param  {Int}     limit          需要几个随机的元素
- * @param  {String}  cTempData      当前已有的汉字组成的字符串，新生成的数组不会有重复的汉字
- * @return {Array}   生成的新随机数组
- */
-function randomTempData(array, limit, cTempData) {
-  const resultArray = []
-  while (resultArray.length !== limit) {
-    var r = random(array)
-    var sameWords = Object.keys(cTempData)
-      .reduce((pv, cv) => {
-        return pv.concat(cTempData[cv].join('').split(''))
-      }, [])
-      .concat(resultArray.join('').split(''))
-      .filter((cWord) => {
-        var same = false
-        r.split('').forEach((w) => {
-          if (w == cWord) {
-            same = true
-          }
-        })
-        return same
-      })
-    if (sameWords.length === 0) {
-      resultArray.push(r)
-    }
-  }
-
-  return resultArray
-}
-
-/**
- * 随机从数组中取出一个元素
- */
-function random(array) {
-  return array[Math.floor(Math.random() * (array.length))]
-}
-
-function render(template) {
-  const placeholders = template.reduce((pv, cv) => {
-    const words = cv.split('/')
-    words.pop()
-    return pv.concat(words)
-  }, [])
-
-  const templateCount = placeholders
-    .reduce((pv, cv) => {
-      const v = pv[cv] || 0
-      pv[cv] = v + 1
-      return pv
-    }, {})
-
-  const aDataWords = wordsData.A
-  const bDataWords = random(wordsData.B)
-
-  const templateData = Object.keys(templateCount).reduce((pv, cv) => {
-    const type = cv.split('')[0]
-    const length = cv.split('')[1]
-    const pz = cv.split('')[2]
-    const count = templateCount[cv]
-    switch (type) {
-      case 'A':
-        const aWords = aDataWords[length][pz]
-        const aData = randomTempData(aWords, count, pv)
-        pv[cv] = aData
-        break
-      case 'B':
-        const randomB = bDataWords[length][pz]
-        const bData = randomTempData(randomB, count, pv)
-        pv[cv] = bData
-        break
-      default:
-        break
-    }
-    return pv
-  }, {})
-
-  const result = template
-    .reduce((pv, cv) => {
-      const words = cv.split('/')
-      const punctuation = words.pop()
-      const r = words.map((placeholder) => {
-        const w = templateData[placeholder].pop()
-        return w
-      })
-      return pv + r.join('') + punctuation + '\n'
-    }, '')
-
-  return result
-}
+const templateBuilder = require('./builder/template')
+const birthdayBuilder = require('./builder/birthday')
+const randomBuilder = require('./builder/random')
 
 function poem(options) {
-  const temp = options.template || random(templatesData)
-
   // 有生日，进入生日模式
-  if (options.birthday) {
-
+  if (options && options.birthday) {
+    return birthdayBuilder.render(options.birthday)
   }
-  const result = render(temp)
-  return result
+  // 有模板，进入模板模式
+  if (options && options.template) {
+    return templateBuilder.render(options.template)
+  }
+  // 没有配置信息，随机生成一个
+  return randomBuilder.render()
 }
 module.exports = poem
 
 
-// ----------------------------------------------------------------------------
-// 测试： template
-// ----------------------------------------------------------------------------
-// templatesData.forEach((t) => {
-//   console.log(t)
-//   const r = poem({
-//     template: t,
-//   })
-//   console.log(r)
-// })
-
-// ----------------------------------------------------------------------------
-// 测试： birthday
-// ----------------------------------------------------------------------------
-const r = poem({
-  birthday: 19921030,
-})
-console.log(r)
+// console.log(poem())
