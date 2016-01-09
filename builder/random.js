@@ -5,7 +5,7 @@ const templatesBuilder = require('./template')
 function build(count) {
   const result = Array(count).fill(0).map((i) => {
     const t = templatesData.randomItem()
-    return templatesBuilder.render(t)
+    return templatesBuilder.build(t)
   })
 
   return result
