@@ -16,5 +16,4 @@ function poem(options) {
 }
 module.exports = poem
 
-
 // console.log(poem()[0])

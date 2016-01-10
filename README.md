@@ -22,7 +22,14 @@ $ npm install poemhub
 
 ### Example
 ```js
-var poemhub = require('poemhub');
+var poem = require('poemhub');
+
+console.log(poem()[0])
+
+// 斜阳寂寞梅花绛，
+// 今日相思时候郎。
+// 归去扁舟芙蓉步，
+// 青山惟有阑干刚。
 ```
 
 ### API
