@@ -1,4 +1,3 @@
-const templateBuilder = require('./builder/template')
 const birthdayBuilder = require('./builder/birthday')
 const randomBuilder = require('./builder/random')
 
