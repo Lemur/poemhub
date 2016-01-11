@@ -13,6 +13,7 @@ Build your poem by your birthday
 - [ ] 可以传入性别属性，生成不同风格的诗句
 - [ ] 对仗工整，模板中加入词性（名词和名词对上，短语的字数对应）
 - [ ] 传入人名，先匹配命中的汉字提前加入词库，然后再生成和名字对应的诗句
+- [ ] 可以自动导入海量诗库，解析词组的字数、平仄、位置，并添加到数据源中
 - [ ] 添加测试用用例，校验模板中的字数对仗工整，不能单字开头
 
 ### Installation
@@ -51,5 +52,5 @@ Copyright (c) 2016 callmewhy
 
 
 ---
-![docor]()
+![docor](https://github.com/guo-yu/docor/blob/master/docor.png)
 built upon love by [docor](git+https://github.com/turingou/docor.git) v0.3.0
