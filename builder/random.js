@@ -4,15 +4,15 @@ const templatesData = require('../data/templates')
 const wordsData = require('../data/words')
 
 /**
- * 从数组中随机取几个元素
- * @param  {Array}   array          原始的数据源
+ * 随机生成 TemplateData 数据源
+ * @param  {Array}   array          原始的数据源数组
  * @param  {Int}     limit          需要几个随机的元素
  * @param  {String}  cTempData      当前已有的汉字组成的字符串，新生成的数组不会有重复的汉字
  * @return {Array}   生成的新随机数组
  */
-function randomTempData(array, limit, cTempData) {
+function buildTemplateArray(array, count, cTempData) {
   const resultArray = []
-  while (resultArray.length !== limit) {
+  while (resultArray.length !== count) {
     // 随机生成汉字词组，如果随机结果和已有数据重复，则弃用本次生成结果
     var r = random.getRandomItem(array)
     var sameWords = Object.keys(cTempData)
@@ -39,13 +39,12 @@ function randomTempData(array, limit, cTempData) {
 
 
 function buildTemplate(template) {
-  const placeholders = template.reduce((pv, cv) => {
-    const words = cv.split('/')
-    words.pop()
-    return pv.concat(words)
-  }, [])
-
-  const templateCount = placeholders
+  const templateCount = template
+    .reduce((pv, cv) => {
+      const words = cv.split('/')
+      words.pop()
+      return pv.concat(words)
+    }, [])
     .reduce((pv, cv) => {
       const v = pv[cv] || 0
       pv[cv] = v + 1
@@ -60,20 +59,19 @@ function buildTemplate(template) {
     const length = cv.split('')[1]
     const pz = cv.split('')[2]
     const count = templateCount[cv]
+    var words = []
     switch (type) {
       case 'A':
-        const aWords = aDataWords[length][pz]
-        const aData = randomTempData(aWords, count, pv)
-        pv[cv] = aData
+        words = aDataWords[length][pz]
         break
       case 'B':
-        const randomB = bDataWords[length][pz]
-        const bData = randomTempData(randomB, count, pv)
-        pv[cv] = bData
+        words = bDataWords[length][pz]
         break
       default:
         break
     }
+    const data = buildTemplateArray(words, count, pv)
+    pv[cv] = data
     return pv
   }, {})
 
@@ -90,4 +88,4 @@ function build(count) {
 }
 module.exports.build = build
 
-console.log(build(1)[0])
+// console.log(build(1)[0])
