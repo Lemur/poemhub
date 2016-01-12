@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/callmewhy/PoemHub/issues"
   },
-  "homepage": "https://github.com/callmewhy/PoemHub#readme"
+  "homepage": "https://github.com/callmewhy/PoemHub#readme",
+  "devDependencies": {
+    "tape": "^4.4.0"
+  }
 }
