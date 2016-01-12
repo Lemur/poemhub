@@ -14,12 +14,12 @@ var BirthdayBuilder = function(birthday) {
   this.day = parseInt(birthday.substr(6, 2))
 }
 
-BirthdayBuilder.prototype._getTemplate = function() {
+BirthdayBuilder.prototype.getTemplate = function() {
   const i = (this.year + this.month) % templatesData.length
   return templatesData[i]
 }
 
-BirthdayBuilder.prototype._buildTemplateArray = function(words, count) {
+BirthdayBuilder.prototype.buildTemplateArray = function(words, count) {
   const resultArray = []
   var i = (this.year + this.month + this.day) % words.length
   while (resultArray.length !== count) {
@@ -30,7 +30,7 @@ BirthdayBuilder.prototype._buildTemplateArray = function(words, count) {
   return resultArray
 }
 
-BirthdayBuilder.prototype._buildTemplate = function(template) {
+BirthdayBuilder.prototype.buildTemplate = function(template) {
   const self = this
   const templateCount = templateLib.count(template)
   const aDataWords = wordsData.A
@@ -51,7 +51,7 @@ BirthdayBuilder.prototype._buildTemplate = function(template) {
       default:
         break
     }
-    const data = self._buildTemplateArray(words, count)
+    const data = self.buildTemplateArray(words, count)
     pv[cv] = data
     return pv
   }, {})
@@ -60,8 +60,8 @@ BirthdayBuilder.prototype._buildTemplate = function(template) {
 }
 
 BirthdayBuilder.prototype.build = function() {
-  const t = this._getTemplate()
-  return this._buildTemplate(t)
+  const t = this.getTemplate()
+  return this.buildTemplate(t)
 }
 
 function build(birthday) {
@@ -70,4 +70,4 @@ function build(birthday) {
 }
 module.exports.build = build
 
-// console.log(build('19921030'))
+console.log(build('19921030'))
