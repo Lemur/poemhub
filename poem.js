@@ -16,6 +16,7 @@ function poem(options) {
 module.exports = poem
 
 // console.log(poem())
+
 // console.log(poem({
 //   birthday: '19921030'
 // }))

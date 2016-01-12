@@ -70,4 +70,4 @@ function build(birthday) {
 }
 module.exports.build = build
 
-console.log(build('19921030'))
+// console.log(build('19921030'))
