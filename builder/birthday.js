@@ -31,11 +31,10 @@ BirthdayBuilder.prototype._buildTemplateArray = function(words, count) {
 }
 
 BirthdayBuilder.prototype._buildTemplate = function(template) {
+  const self = this
   const templateCount = templateLib.count(template)
-
   const aDataWords = wordsData.A
   const bDataWords = wordsData.B[this.day % wordsData.B.length]
-
   const templateData = Object.keys(templateCount).reduce((pv, cv) => {
     const type = cv.split('')[0]
     const length = cv.split('')[1]
@@ -52,7 +51,7 @@ BirthdayBuilder.prototype._buildTemplate = function(template) {
       default:
         break
     }
-    const data = this._buildTemplateArray(words, count)
+    const data = self._buildTemplateArray(words, count)
     pv[cv] = data
     return pv
   }, {})
@@ -70,4 +69,5 @@ function build(birthday) {
   return bb.build()
 }
 module.exports.build = build
+
 // console.log(build('19921030'))
