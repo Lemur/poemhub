@@ -26,7 +26,13 @@ $ npm install poemhub
 ```js
 var poem = require('poemhub');
 
-console.log(poem()[0])
+// make poem by random
+console.log(poem())
+
+// make poem by birthday
+console.log(poem({
+  birthday: '19921030'
+}))
 
 // 斜阳寂寞梅花绛，
 // 今日相思时候郎。

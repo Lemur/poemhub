@@ -1,3 +1,7 @@
+/**
+ * 随机生成古诗
+ */
+
 const random = require('../lib/random')
 const render = require('../lib/render')
 const templatesData = require('../data/templates')

@@ -11,8 +11,11 @@ function poem(options) {
     return templateBuilder.build(options.template)
   }
   // 没有配置信息，随机生成一个
-  return randomBuilder.build()
+  return randomBuilder.build()[0]
 }
 module.exports = poem
 
-// console.log(poem()[0])
+// console.log(poem())
+// console.log(poem({
+//   birthday: '19921030'
+// }))

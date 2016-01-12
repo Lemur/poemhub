@@ -1,50 +1,40 @@
 /**
  * 根据生日（AAAABBCC）生成古诗
- *
- * 模板选择的原则：
- *
- * 数据源生成原则：
  */
 
 const random = require('../lib/random')
 const render = require('../lib/render')
 const wordsData = require('../data/words')
 const templateLib = require('../lib/template')
+const templatesData = require('../data/templates')
 
-function getTemplate(birthday) {
-  const templatesData = require('../data/templates')
-  return templatesData[0]
+var BirthdayBuilder = function(birthday) {
+  this.year = parseInt(birthday.substr(0, 4), 10)
+  this.month = parseInt(birthday.substr(4, 2))
+  this.day = parseInt(birthday.substr(6, 2))
 }
 
+BirthdayBuilder.prototype._getTemplate = function() {
+  const i = (this.year + this.month) % templatesData.length
+  return templatesData[i]
+}
 
-/**
- * 随机生成 TemplateData 数据源
- * @param  {Array}   array          原始的数据源数组
- * @param  {Int}     limit          需要几个随机的元素
- * @param  {String}  cTempData      当前已有的汉字组成的字符串，新生成的数组不会有重复的汉字
- * @return {Array}   生成的新随机数组
- */
-function buildTemplateArray(birthday, words, count) {
-  const year = birthday.substr(0, 4)
-  const month = birthday.substr(4, 2)
-  const day = birthday.substr(6, 2)
+BirthdayBuilder.prototype._buildTemplateArray = function(words, count) {
   const resultArray = []
+  var i = (this.year + this.month + this.day) % words.length
   while (resultArray.length !== count) {
-    var r = words.pop()
+    var r = words[i]
+    i = (i + 1) % words.length
     resultArray.push(r)
   }
   return resultArray
 }
 
-
-function buildTemplate(birthday, template) {
-  const year = birthday.substr(0, 4)
-  const month = birthday.substr(4, 2)
-  const day = birthday.substr(6, 2)
+BirthdayBuilder.prototype._buildTemplate = function(template) {
   const templateCount = templateLib.count(template)
 
   const aDataWords = wordsData.A
-  const bDataWords = wordsData.B[0] // TODO: USE BIRTHDAY
+  const bDataWords = wordsData.B[this.day % wordsData.B.length]
 
   const templateData = Object.keys(templateCount).reduce((pv, cv) => {
     const type = cv.split('')[0]
@@ -62,7 +52,7 @@ function buildTemplate(birthday, template) {
       default:
         break
     }
-    const data = buildTemplateArray(birthday, words, count)
+    const data = this._buildTemplateArray(words, count)
     pv[cv] = data
     return pv
   }, {})
@@ -70,11 +60,14 @@ function buildTemplate(birthday, template) {
   return render(template, templateData)
 }
 
+BirthdayBuilder.prototype.build = function() {
+  const t = this._getTemplate()
+  return this._buildTemplate(t)
+}
+
 function build(birthday) {
-  const t = getTemplate(birthday)
-  console.log(t)
-  return buildTemplate(birthday, t)
+  const bb = new BirthdayBuilder(birthday)
+  return bb.build()
 }
 module.exports.build = build
-
-console.log(build('19921030'))
+// console.log(build('19921030'))
