@@ -24,7 +24,7 @@ $ npm install poemhub
 
 ### Example
 ```js
-var poem = require('poemhub');
+var poem = require('poemhub').default;
 
 // make poem by random
 console.log(poem())

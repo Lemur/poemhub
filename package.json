@@ -2,7 +2,7 @@
   "name": "poemhub",
   "version": "0.1.0",
   "description": "Write a poem automaticly",
-  "main": "poem.js",
+  "main": "dist/poem.js",
   "scripts": {
     "build": "./node_modules/.bin/babel lib -d dist --watch --source-maps",
     "test": "node test/*.js"
