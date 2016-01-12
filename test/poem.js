@@ -1,5 +1,5 @@
-const test = require('tape')
-const poem = require('../poem')
+var test = require('tape')
+var poem = require('../dist/poem').default
 
 test('random builder', function(t) {
   const p1 = poem()
