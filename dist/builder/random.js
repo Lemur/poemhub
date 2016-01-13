@@ -94,10 +94,10 @@ function buildTemplate(template) {
   return (0, _render2.default)(template, templateData);
 }
 
-function build() {
-  var t = (0, _random.getRandomItem)(_templates2.default);
+function build(temp) {
+  var t = temp || (0, _random.getRandomItem)(_templates2.default);
   return buildTemplate(t);
 }
 
-// console.log(build(1)[0])
+// console.log(build())
 //# sourceMappingURL=random.js.map

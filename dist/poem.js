@@ -22,7 +22,7 @@ function poem(options) {
   }
   // 有模板，进入模板模式
   if (options && options.template) {
-    return templateBuilder(options.template);
+    return (0, _random2.default)(options.template);
   }
   // 没有配置信息，随机生成一个
   return (0, _random2.default)();
