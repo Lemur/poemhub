@@ -4,8 +4,9 @@
   "description": "Write a poem automaticly",
   "main": "dist/poem.js",
   "scripts": {
-    "build": "./node_modules/.bin/babel lib -d dist --watch --source-maps",
-    "test": "node test/*.js"
+    "dev": "./node_modules/.bin/babel lib -d dist --watch --source-maps",
+    "build": "./node_modules/.bin/babel lib -d dist --source-maps",
+    "test": "npm run build && node test/*.js"
   },
   "repository": {
     "type": "git",

@@ -7,6 +7,8 @@ exports.default = build;
 
 var _random = require('../util/random');
 
+var _template = require('../util/template');
+
 var _render = require('../util/render');
 
 var _render2 = _interopRequireDefault(_render);
@@ -28,10 +30,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @param  {String}  cTempData      当前已有的汉字组成的字符串，新生成的数组不会有重复的汉字
  * @return {Array}   生成的新随机数组
  */
-/**
- * 随机生成古诗
- */
-
 function buildTemplateArray(array, count, cTempData) {
   var resultArray = [];
   while (resultArray.length !== count) {
@@ -54,18 +52,12 @@ function buildTemplateArray(array, count, cTempData) {
   }
 
   return resultArray;
-}
+} /**
+   * 随机生成古诗
+   */
 
 function buildTemplate(template) {
-  var templateCount = template.reduce(function (pv, cv) {
-    var words = cv.split('/');
-    words.pop();
-    return pv.concat(words);
-  }, []).reduce(function (pv, cv) {
-    var v = pv[cv] || 0;
-    pv[cv] = v + 1;
-    return pv;
-  }, {});
+  var templateCount = (0, _template.countTemplate)(template);
 
   var aDataWords = _words2.default.A;
   var bDataWords = (0, _random.getRandomItem)(_words2.default.B);
@@ -90,7 +82,6 @@ function buildTemplate(template) {
     pv[cv] = data;
     return pv;
   }, {});
-
   return (0, _render2.default)(template, templateData);
 }
 
