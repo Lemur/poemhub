@@ -3,26 +3,25 @@ const request = require('request')
 const async = require('async')
 const fs = require('fs')
 
-var index = 0
+let index = 0
 function getPoem(url, cb) {
-
-  request(url, function(err, res, body) {
-    var $ = cheerio.load(body, {
-      ignoreWhitespace: true
+  request(url, function (err, res, body) {
+    const $ = cheerio.load(body, {
+      ignoreWhitespace: true,
     })
 
     // 标题
-    var poemTitle = $('div div div h1').text()
+    const poemTitle = $('div div div h1').text()
     // 作者
     $('p[style="margin:0px; font-size:12px;line-height:160%;"] span').remove()
-    var poemAuthor = $('p[style="margin:0px; font-size:12px;line-height:160%;"]').eq(1).text()
+    let poemAuthor = $('p[style="margin:0px; font-size:12px;line-height:160%;"]').eq(1).text()
     if (poemAuthor === '' || !poemAuthor) {
       poemAuthor = '佚名'
     }
-    //正文
+    // 正文
     $('div .son2 p[style="margin:0px; font-size:12px;line-height:160%;"]').remove()
     $('div .son2 div').remove()
-    var poemBody = $('div .son2').text()
+    let poemBody = $('div .son2').text()
     poemBody = poemBody.substring(poemBody.lastIndexOf('     ') + 5)
 
     // 将结果追加到文件
@@ -34,16 +33,15 @@ function getPoem(url, cb) {
     }
     cb(null, null)
   })
-
 }
 
-var urls = []
+const urls = []
 
-
-for (var i = 0; i < 71000; ++i) {
+let i = 0
+for (i = 0; i < 71000; ++i) {
   urls.push('http://so.gushiwen.org/view_' + i + '.aspx')
 }
 
-async.mapLimit(urls, 10, function(url, cb) {
+async.mapLimit(urls, 10, function (url, cb) {
   getPoem(url, cb)
 })
