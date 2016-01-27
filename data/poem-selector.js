@@ -10,7 +10,7 @@ function select(matches, output) {
   let lineTag = 0 // 0-空行，1-标题，2-作者，3-正文
   const poemBuff = [] // 暂存诗的标题和作者，如果正文不符合要求则丢弃
 
-  fs.createReadStream('data/poems.txt', {
+  fs.createReadStream('data/docs/poems.txt', {
     encoding: 'UTF-8',
   }).on('data', (doc) => {
     let line = ''
@@ -52,5 +52,5 @@ function isQiYan(s) {
   }
 }
 
-select(isWuYan, 'data/WuYan.txt')
-select(isQiYan, 'data/QiYan.txt')
+select(isWuYan, 'data/docs/WuYan.txt')
+select(isQiYan, 'data/docs/QiYan.txt')
