@@ -1,3 +1,5 @@
+'use strict'
+
 const fs = require('fs')
 
 /**
@@ -10,7 +12,7 @@ function select(matches, output) {
   let lineTag = 0 // 0-空行，1-标题，2-作者，3-正文
   const poemBuff = [] // 暂存诗的标题和作者，如果正文不符合要求则丢弃
 
-  fs.createReadStream('data/docs/poems.txt', {
+  fs.createReadStream('data/word/poems.txt', {
     encoding: 'UTF-8',
   }).on('data', (doc) => {
     let line = ''
@@ -23,7 +25,7 @@ function select(matches, output) {
       if (lineTag === 3) { // 匹配正文
         lineTag = -1
         if (matches(line)) {
-          fs.appendFile(output, '\n' + poemBuff[0] + '\n' + poemBuff[1] + '\n' + line + '\n')
+          fs.appendFile(output, /* '\n' + poemBuff[0] + '\n' + poemBuff[1] + '\n' + */line + '\n')
         }
       } else {
         if (lineTag > 0) { // 暂存标题和作者
@@ -38,19 +40,19 @@ function select(matches, output) {
 /**
  * 判断一段字符串是否是五言诗
  */
-function isWuYan(s) {
+function wuYan(s) {
   const result = s.match(/([\u4e00-\u9fa5]{5}[，][ ]*[\u4e00-\u9fa5]{5}[。][ ]*)+/)
   if (result && result[0] === s) { // 判断是否整首诗都完全匹配
     return true
   }
 }
 
-function isQiYan(s) {
+function qiYan(s) {
   const result = s.match(/([\u4e00-\u9fa5]{7}[，][ ]*[\u4e00-\u9fa5]{7}[。][ ]*)+/)
   if (result && result[0] === s) { // 判断是否整首诗都完全匹配
     return true
   }
 }
 
-select(isWuYan, 'data/docs/WuYan.txt')
-select(isQiYan, 'data/docs/QiYan.txt')
+select(wuYan, 'data/word/WuYan_withoutTitle.txt')
+select(qiYan, 'data/word/QiYan_withoutTitle.txt')

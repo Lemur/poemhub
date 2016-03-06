@@ -1,0 +1,20 @@
+
+n2/n2/n3/ n2/v2/n3/
+n2/n2/n3/ n4/n3/
+n2/v2/n3/ n2/v2/n3/
+v2/n2/n3/ v2/n2/v1/n2/
+n2/n2/v1/n2/ n2/n2/v1/n2/
+n2/a1/v1/n3/ n2/v2/n3/
+n2/d1/v1/n3/ n2/d1/v1/n3/
+n2/n2/n3/ n3/v1/n3/
+n3/a1/v1/n2/ n3/a1/v1/n2/
+n2/v2/n3/ n2/n2/v1/n2/
+n2/n2/n3/ n2/n2/v1/n2/
+n2/v2/n3/ n2/n2/n3/
+v2/n2/n3/ n2/n2/v1/n2/
+n2/n2/v1/n2/ n2/n2/n3/
+n2/n2/v1/n2/ n2/n3/n2/
+n2/n2/n3/ n2/n2/n3/
+n2/n2/v1/n2/ v2/n2/v1/n2/
+n2/n3/v2/ v2/n2/n3/
+n2/n3/v2/ v2/n2/v1/n2/
