@@ -18,6 +18,6 @@ function poem(birthday, cb) {
   })
 }
 
-poem(233333, (poem) => {
+poem(2333, (poem) => {
   console.log(poem)
 })
