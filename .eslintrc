@@ -1,0 +1,14 @@
+{
+  "extends": "airbnb",
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "globals": {
+    "log": false
+  },
+  "rules": {
+    "semi": [2, "never"],
+    "quotes": [2, "single"]
+  }
+}

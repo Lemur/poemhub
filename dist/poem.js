@@ -28,9 +28,8 @@ function poem(options) {
   return (0, _random2.default)();
 }
 
-// console.log(poem())
-//
-// console.log(poem({
-//   birthday: '19921030'
-// }))
+//console.log(poem())
+console.log(poem({
+  birthday: '19921030'
+}))
 //# sourceMappingURL=poem.js.map
